@@ -63,10 +63,17 @@ namespace Birdcage
             {
                 if (rootFrame.Content == null)
                 {
-                    // Wenn der Navigationsstapel nicht wiederhergestellt wird, zur ersten Seite navigieren
-                    // und die neue Seite konfigurieren, indem die erforderlichen Informationen als Navigationsparameter
-                    // übergeben werden
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+
+                    // Überprüfen, ob User eingeloggt ist und dementsprechende Seite laden
+                    Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                    if (localSettings.Values["LoggedIn"] == null || (bool)localSettings.Values["LoggedIn"] == false)
+                    {
+                        rootFrame.Navigate(typeof(LoginPage), e.Arguments);
+                    }
+                    else
+                    {
+                        rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    }
                 }
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist
                 Window.Current.Activate();
