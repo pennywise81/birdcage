@@ -26,7 +26,7 @@ namespace Birdcage
         {
             this.InitializeComponent();
 
-            info.Text = "Hallo";
+            info.Text = ((App)Application.Current).GetLatestLogEntryToEvent("Login").ToString();
         }
 
         private void BtnMainPageLogout_Click(object sender, RoutedEventArgs e)

@@ -115,5 +115,30 @@ namespace Birdcage
 
             await Windows.Storage.FileIO.AppendTextAsync(LogFile, DateTime.Now.ToString() + "\t" + LogEntryMessage + Environment.NewLine);
         }
+
+        /// <summary>
+        /// Liefert das DateTime zu einem bestimmten Log Event
+        /// </summary>
+        /// <param name="Event">das gewünschte Log Event</param>
+        /// <returns>DateTime</returns>
+        public DateTime GetLatestLogEntryToEvent(string Event)
+        {
+            string text = System.IO.File.ReadAllText(Windows.Storage.ApplicationData.Current.LocalFolder.Path + "\\logfile.txt");
+            string[] entries = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            entries = entries.Reverse().ToArray();
+            DateTime ReturnEntry = new DateTime();
+            int DateTimeLength = DateTime.Now.ToString().Length;
+
+            foreach (string entry in entries)
+            {
+                if (entry.Substring(DateTimeLength + "\t".Length) == Event)
+                {
+                    ReturnEntry = DateTime.Parse(entry.Substring(0, DateTimeLength));
+                    break;
+                }
+            }
+
+            return ReturnEntry;
+        }
     }
 }
