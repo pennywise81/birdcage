@@ -32,6 +32,8 @@ namespace Birdcage
             // Login speichern und auf Main Page umleiten
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             localSettings.Values["LoggedIn"] = true;
+               
+            ((App)Application.Current).WriteLogEntry("Login");
 
             this.Frame.Navigate(typeof(MainPage));
         }

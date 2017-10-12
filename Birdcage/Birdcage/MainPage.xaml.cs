@@ -25,6 +25,8 @@ namespace Birdcage
         public MainPage()
         {
             this.InitializeComponent();
+
+            info.Text = "Hallo";
         }
 
         private void BtnMainPageLogout_Click(object sender, RoutedEventArgs e)
@@ -32,6 +34,8 @@ namespace Birdcage
             // Logout speichern und auf Login Page umleiten
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             localSettings.Values["LoggedIn"] = false;
+
+            ((App)Application.Current).WriteLogEntry("Logout");
 
             this.Frame.Navigate(typeof(LoginPage));
         }

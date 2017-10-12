@@ -9,6 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock Text="Main Page" FontSize="32" />
+        <TextBlock Name="info" />
         <Button Name="BtnMainPageLogout" Content="Logout" Click="BtnMainPageLogout_Click" />
     </Grid>
 </Page>

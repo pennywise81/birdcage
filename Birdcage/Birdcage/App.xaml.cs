@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -29,6 +30,9 @@ namespace Birdcage
         public App()
         {
             this.InitializeComponent();
+
+            this.WriteLogEntry("Starting Application");
+
             this.Suspending += OnSuspending;
         }
 
@@ -102,6 +106,14 @@ namespace Birdcage
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
             deferral.Complete();
+        }
+
+        public async void WriteLogEntry(string LogEntryMessage)
+        {
+            Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            Windows.Storage.StorageFile LogFile = await storageFolder.CreateFileAsync("logfile.txt", Windows.Storage.CreationCollisionOption.OpenIfExists);
+
+            await Windows.Storage.FileIO.AppendTextAsync(LogFile, DateTime.Now.ToString() + "\t" + LogEntryMessage + Environment.NewLine);
         }
     }
 }
